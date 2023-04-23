@@ -1,4 +1,8 @@
 # ftp_code_injection
+
+![image](https://user-images.githubusercontent.com/88283829/233858587-19741cb9-2e27-424f-98cf-352660dcba35.png)
+
+
 Using FTP (file transfer protocol) to do code injection into the web sites.
 
 The teacher wanted one file script only.
