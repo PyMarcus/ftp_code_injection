@@ -30,3 +30,6 @@ A redirect link (to my github) was injected into localhost page:
 
 ![image](https://user-images.githubusercontent.com/88283829/233857673-f495bd6b-f150-4c74-bbb3-8f3abcaa55cf.png)
 
+### Local file:
+
+![image](https://user-images.githubusercontent.com/88283829/233858495-cb7cfa5c-7f43-4540-bddd-fe0b7a47ee8f.png)
