@@ -7,6 +7,10 @@ Using FTP (file transfer protocol) to do code injection into the web sites.
 
     Debian 5.17.11-1kali1 GNU/Linux
     
+### about ftp config:
+
+https://linuxconfig.org/how-to-setup-and-use-ftp-server-in-ubuntu-linux
+    
 ### Requeriments:
 
 
