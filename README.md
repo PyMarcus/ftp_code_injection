@@ -4,6 +4,7 @@
 
 
 Using FTP (file transfer protocol) to do code injection into the web sites.
+By the way, the files are downloaded as temporary files .
 
 The teacher wanted one file script only.
 
