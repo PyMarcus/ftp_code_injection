@@ -8,6 +8,10 @@ By the way, the files are downloaded as temporary files .
 
 The teacher wanted one file script only.
 
+
+![image](https://user-images.githubusercontent.com/88283829/233876403-1f5ad1f0-d614-40b3-b21c-022b52157478.png)
+
+
 ### System: 
 
     Debian 5.17.11-1kali1 GNU/Linux
